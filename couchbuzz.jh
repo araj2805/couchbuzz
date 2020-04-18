@@ -1,0 +1,14 @@
+
+
+entity Country {
+	countryName String,
+    id String,
+    gdp Integer,
+    updated String,
+    regionNumber String,
+    name String,
+    type String,
+    population Integer,
+    countryCode String
+}
+
