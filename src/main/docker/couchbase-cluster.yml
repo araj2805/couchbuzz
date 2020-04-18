@@ -1,0 +1,23 @@
+version: '2'
+services:
+  couchbuzz-couchbase:
+    build:
+      context: .
+      dockerfile: couchbase/Couchbase.Dockerfile
+    ports:
+      - 8091:8091
+      - 8092:8092
+      - 8093:8093
+      - 11210:11210
+    environment:
+      - TYPE=MASTER
+      - BUCKET=couchbuzz
+  couchbuzz-couchbase-node:
+    build:
+      context: .
+      dockerfile: couchbase/Couchbase.Dockerfile
+    environment:
+      - TYPE=WORKER
+      - BUCKET=couchbuzz
+      - COUCHBASE_MASTER=couchbuzz-couchbase
+      - AUTO_REBALANCE=false

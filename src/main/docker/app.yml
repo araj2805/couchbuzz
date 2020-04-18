@@ -1,0 +1,27 @@
+version: '2'
+services:
+  couchbuzz-app:
+    image: couchbuzz
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - SPRING_COUCHBASE_BOOTSTRAP_HOSTS=couchbuzz-couchbase
+      - SPRING_COUCHBASE_BUCKET_NAME=couchbuzz
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - KAFKA_BOOTSTRAPSERVERS=kafka:9092
+  couchbuzz-couchbase:
+    extends:
+      file: couchbase.yml
+      service: couchbuzz-couchbase
+  kafka:
+    extends:
+      file: kafka.yml
+      service: kafka
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+  zookeeper:
+    extends:
+      file: kafka.yml
+      service: zookeeper
